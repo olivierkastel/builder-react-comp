@@ -1,0 +1,33 @@
+{
+  "name": "builder-react-comp-dev",
+  "version": "0.0.0",
+  "description": "Builder Archetype - React Component (Development)",
+  "main": "lib/index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hourliert/builder-react-comp.git"
+  },
+  "keywords": [
+    "builder",
+    "archetype",
+    "react",
+    "component"
+  ],
+  "author": "Thomas Hourlier <hourliert@gmail.com> (https://github.com/hourliert)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hourliert/builder-react-comp/issues"
+  },
+  "homepage": "https://github.com/hourliert/builder-react-comp#readme",
+  "devDependencies": {},
+  "dependencies": {
+    "babel-eslint": "^5.0.0",
+    "eslint": "2.2.0",
+    "eslint-config-airbnb": "^6.0.2",
+    "eslint-config-react": "^1.1.1",
+    "eslint-plugin-react": "^4.1.0",
+    "jscs": "^2.11.0"
+  },
+  "peerDependencies": {}
+}

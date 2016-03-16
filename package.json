@@ -1,0 +1,74 @@
+{
+  "name": "builder-react-comp",
+  "version": "0.0.0",
+  "description": "Builder Archetype - React Component",
+  "main": "lib/index.js",
+  "scripts": {
+    "builder:compile": "rm -rf lib && babel index.js --out-dir lib/ && babel scripts --out-dir lib/scripts && babel config --out-dir lib/config",
+    "builder:gen-dev": "builder-support gen-dev",
+    "prepublish": "npm run builder:compile",
+    "eslint": "eslint --color src/**/*.js",
+    "jscs": "jscs src/**/*.js",
+    "lint": "builder concurrent eslint jscs",
+    "test:all": "NODE_PATH=./src:$NODE_PATH mocha --opts node_modules/builder-react-fullstack/config/mocha/mocha.opts src/**/*-test.js",
+    "test:all:watch": "NODE_PATH=./src:$NODE_PATH mocha --opts node_modules/builder-react-fullstack/config/mocha/mocha.opts.watch src/**/*-test.js",
+    "test:all:coverage": "NODE_PATH=./src:$NODE_PATH babel-node node_modules/.bin/istanbul cover --config node_modules/builder-react-fullstack/config/istanbul/.istanbul.yml _mocha -- --opts node_modules/builder-react-fullstack/config/mocha/mocha.opts.coverage src/**/*-test.js",
+    "bundle": "node node_modules/builder-react-fullstack/lib/index bundle",
+    "build": "node node_modules/builder-react-fullstack/lib/index build",
+    "serve": "node node_modules/builder-react-fullstack/lib/index serve",
+    "release": "node node_modules/builder-react-fullstack/lib/index release"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hourliert/builder-react-comp.git"
+  },
+  "keywords": [
+    "builder",
+    "archetype",
+    "react",
+    "component"
+  ],
+  "author": "Thomas Hourlier <hourliert@gmail.com> (https://github.com/hourliert)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hourliert/builder-react-comp/issues"
+  },
+  "homepage": "https://github.com/hourliert/builder-react-comp#readme",
+  "dependencies": {
+    "babel-cli": "^6.5.0",
+    "babel-core": "^6.5.0",
+    "babel-loader": "^6.2.0",
+    "babel-plugin-add-module-exports": "^0.1.1",
+    "babel-plugin-react-transform": "^2.0.0",
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
+    "babel-polyfill": "^6.5.0",
+    "babel-preset-es2015": "^6.5.0",
+    "babel-preset-react": "^6.5.0",
+    "babel-preset-stage-0": "^6.5.0",
+    "browser-sync": "^2.9.11",
+    "file-loader": "^0.8.4",
+    "json-loader": "^0.5.3",
+    "raw-loader": "^0.5.1",
+    "react-transform-hmr": "^1.0.2",
+    "semver": "^5.1.0",
+    "url-loader": "^0.5.6",
+    "webpack": "^1.12.14",
+    "webpack-hot-middleware": "^2.2.0",
+    "webpack-isomorphic-tools": "^2.2.26",
+    "webpack-middleware": "^1.5.1",
+    "webpack-split-by-path": "0.0.8",
+    "del": "^2.0.2",
+    "mkdirp": "^0.5.1",
+    "ncp": "^2.0.0",
+    "replace": "^0.3.0"
+  },
+  "devDependencies": {
+    "babel-eslint": "^5.0.0",
+    "builder-support": "^0.3.0",
+    "eslint": "2.2.0",
+    "eslint-config-airbnb": "^6.0.2",
+    "eslint-config-react": "^1.1.1",
+    "eslint-plugin-react": "^4.1.0",
+    "jscs": "^2.11.0"
+  }
+}
