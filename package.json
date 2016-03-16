@@ -1,6 +1,6 @@
 {
   "name": "builder-react-comp",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Builder Archetype - React Component",
   "main": "lib/index.js",
   "scripts": {
@@ -10,9 +10,9 @@
     "eslint": "eslint --color src playground",
     "jscs": "jscs src playground",
     "lint": "builder concurrent eslint jscs",
-    "test:all": "jest --config node_modules/builder-react-comp/config/jest/config.json",
-    "test:all:watch": "jest --config node_modules/builder-react-comp/config/jest/config.json --watch",
-    "test:all:coverage": "jest --config node_modules/builder-react-comp/config/jest/config.coverage.json",
+    "test:all": "BABEL_ENV=commonjs jest --config node_modules/builder-react-comp/config/jest/config.json",
+    "test:all:watch": "BABEL_ENV=commonjs jest --config node_modules/builder-react-comp/config/jest/config.json --watch",
+    "test:all:coverage": "BABEL_ENV=commonjs jest --config node_modules/builder-react-comp/config/jest/config.coverage.json",
     "serve:playground": "BABEL_ENV=commonjs node node_modules/builder-react-comp/lib/index serve playground",
     "build:commonjs": "rimraf lib && BABEL_ENV=commonjs babel ./src --out-dir ./lib --ignore **/__tests__/**",
     "build:es": "rimraf lib && BABEL_ENV=es babel ./src --out-dir ./es --ignore **/__tests__/**",

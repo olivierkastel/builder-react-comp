@@ -1,6 +1,6 @@
 {
   "name": "builder-react-comp-dev",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Builder Archetype - React Component (Development)",
   "main": "lib/index.js",
   "scripts": {},
