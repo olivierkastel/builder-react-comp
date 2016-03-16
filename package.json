@@ -1,6 +1,6 @@
 {
   "name": "builder-react-comp",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Builder Archetype - React Component",
   "main": "lib/index.js",
   "scripts": {
@@ -50,6 +50,7 @@
     "babel-plugin-transform-es2015-classes": "^6.5.0",
     "babel-plugin-transform-es2015-computed-properties": "^6.5.0",
     "babel-plugin-transform-es2015-destructuring": "^6.5.0",
+    "babel-plugin-transform-es2015-duplicate-keys": "^6.5.0",
     "babel-plugin-transform-es2015-for-of": "^6.5.0",
     "babel-plugin-transform-es2015-function-name": "^6.5.0",
     "babel-plugin-transform-es2015-literals": "^6.5.0",
@@ -60,8 +61,10 @@
     "babel-plugin-transform-es2015-spread": "^6.5.0",
     "babel-plugin-transform-es2015-sticky-regex": "^6.5.0",
     "babel-plugin-transform-es2015-template-literals": "^6.5.0",
+    "babel-plugin-transform-es2015-typeof-symbol": "^6.5.0",
     "babel-plugin-transform-es2015-unicode-regex": "^6.5.0",
     "babel-plugin-transform-object-rest-spread": "^6.5.0",
+    "babel-plugin-transform-regenerator": "^6.5.0",
     "babel-preset-react": "^6.5.0",
     "babel-preset-stage-0": "^6.5.0",
     "browser-sync": "^2.9.11",
