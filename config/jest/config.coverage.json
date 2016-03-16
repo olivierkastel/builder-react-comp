@@ -1,0 +1,9 @@
+{
+ "scriptPreprocessor": "<rootDir>/node_modules/babel-jest",
+ "testPathIgnorePatterns": ["node_modules", "lib"],
+ "unmockedModulePathPatterns": [
+   "react",
+   "enzyme"
+ ],
+ "collectCoverage": true
+}

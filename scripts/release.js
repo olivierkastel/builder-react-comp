@@ -5,7 +5,6 @@ import { execCmd } from './helpers/cp';
 const ROOT = process.cwd();
 
 const npmPackageFile = 'package.json';
-const dockerComposeFile = 'docker-compose.yml';
 
 export default async function release() {
   const npmPackage = require(`${ROOT}/package.json`);
@@ -45,12 +44,4 @@ export default async function release() {
 
   await writeFile(npmPackageFile, newPackageData);
   console.log('package.json bumped'); // eslint-disable-line
-
-  console.log('Bumping docker-compose.yml'); // eslint-disable-line
-  const composeData = await readFile(dockerComposeFile);
-  const regexp = new RegExp(`:${npmPackage.version}$`, 'm');
-  const newComposeData = composeData.replace(regexp, `:${nextVersion}`);
-
-  await writeFile(dockerComposeFile, newComposeData);
-  console.log('docker-compose.yml bumped'); // eslint-disable-line
 }

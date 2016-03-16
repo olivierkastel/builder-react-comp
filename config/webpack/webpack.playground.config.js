@@ -1,23 +1,14 @@
 import { join, resolve } from 'path';
-import { readdirSync } from 'fs';
 import webpack from 'webpack';
-import IsomorphicToolsPlugin from 'webpack-isomorphic-tools/plugin';
-import SplitByPathPlugin from 'webpack-split-by-path';
-import makeIsomorphicConfig, { alias } from './webpack.isomorphic.config';
 
-const REGULAR_EXPRESSION = 'regular_expression';
 const ROOT = process.cwd();
 
 const DEBUG = !process.argv.includes('--release');
-const ONBUILD_REDUX_DEVTOOLS = process.argv.includes('--devtools');
 const ONBUILD_REACT_PERF = process.argv.includes('--react-perf');
-const ONBUILD_SERVER_RENDERING = process.argv.includes('--isomorphic');
 const VERBOSE = process.argv.includes('--verbose');
 const WATCH = process.argv.includes('serve');
 
 const GLOBALS = {
-  __ONBUILD_SERVER_RENDERING__: ONBUILD_SERVER_RENDERING || DEBUG,
-  __ONBUILD_REDUX_DEVTOOLS__: ONBUILD_REDUX_DEVTOOLS || DEBUG,
   __ONBUILD_REACT_PERF__: ONBUILD_REACT_PERF || DEBUG,
   'process.env.NODE_ENV': DEBUG ? '"development"' : '"production"',
   __DEVELOPMENT__: DEBUG,
@@ -33,18 +24,7 @@ const JS_LOADER = {
   },
 };
 
-const context = join(resolve(ROOT), './src');
-const webpackAlias = Object.keys(alias).reduce((cur, k) => ({
-  ...cur,
-  [k]: join(context, alias[k]),
-}), {});
-
-const isomorphicToolsPlugin = new IsomorphicToolsPlugin(
-  makeIsomorphicConfig(context)
-).development(DEBUG);
-
-const nodeModules = readdirSync(join(resolve(ROOT), './node_modules'))
-  .filter(x => !['.bin'].includes(x));
+const context = join(resolve(ROOT), './playground');
 
 // Common config. Used both for client and server.
 const commonConfig = {
@@ -56,7 +36,6 @@ const commonConfig = {
 
   resolve: {
     root: resolve(ROOT),
-    alias: webpackAlias,
   },
 
   cache: DEBUG,
@@ -90,7 +69,7 @@ const commonConfig = {
         loader: require.resolve('raw-loader'),
       },
       {
-        test: isomorphicToolsPlugin[REGULAR_EXPRESSION]('images'),
+        test: /\.(jpg|png|gif|svg)$/,
         loader: `${require.resolve('url-loader')}?limit=10240`,
       }, {
         test: /\.(eot|ttf|wav|mp3)$/,
@@ -101,12 +80,11 @@ const commonConfig = {
 };
 
 // Client specific config. We merge the new config with the common config.
-const appConfig = Object.assign({}, commonConfig, {
+const playgroundConfig = Object.assign({}, commonConfig, {
   devtool: DEBUG ? 'cheap-module-eval-source-map' : false,
 
   entry: {
     client: [
-      require.resolve('babel-polyfill'),
       ...(WATCH ? [require.resolve('webpack-hot-middleware/client')] : []),
       './clientEntry.js',
     ],
@@ -114,9 +92,8 @@ const appConfig = Object.assign({}, commonConfig, {
 
   output: {
     ...commonConfig.output,
-    path: join(ROOT, './build/public'),
-    filename: '[name]-[hash].js',
-    chunkFilename: '[name]-[chunkhash].js',
+    path: join(ROOT, './playground'),
+    filename: 'bundle.js',
   },
 
   resolve: {
@@ -126,13 +103,6 @@ const appConfig = Object.assign({}, commonConfig, {
   plugins: [
     ...commonConfig.plugins,
     new webpack.DefinePlugin(GLOBALS),
-    isomorphicToolsPlugin,
-    new SplitByPathPlugin([
-      {
-        name: 'vendor',
-        path: join(ROOT, 'node_modules'),
-      },
-    ]),
     ...(!DEBUG ? [
       new webpack.optimize.DedupePlugin(),
       new webpack.optimize.UglifyJsPlugin({
@@ -171,65 +141,4 @@ const appConfig = Object.assign({}, commonConfig, {
   },
 });
 
-// Server specific config. We merge the new config with the common config.
-const serverConfig = Object.assign({}, commonConfig, {
-  devtool: 'source-map',
-
-  entry: {
-    server: [
-      require.resolve('babel-polyfill'),
-      './serverEntry.js',
-    ],
-  },
-
-  output: {
-    ...commonConfig.output,
-    path: join(ROOT, './build'),
-    filename: 'server.js',
-    libraryTarget: 'commonjs2',
-  },
-
-  resolve: {
-    ...commonConfig.resolve,
-    packageMains: ['webpack', 'web', 'browserify', ['jam', 'main'], 'main', 'browser'],
-  },
-
-  target: 'node',
-
-  externals: nodeModules,
-
-  node: {
-    console: false,
-    global: false,
-    process: false,
-    Buffer: false,
-    __filename: false,
-    __dirname: false,
-  },
-
-  plugins: [
-    ...commonConfig.plugins,
-    new webpack.DefinePlugin(GLOBALS),
-    new webpack.BannerPlugin('require("source-map-support").install();', {
-      raw: true,
-      entryOnly: false,
-    }),
-    ...(!DEBUG ? [
-      new webpack.optimize.DedupePlugin(),
-      new webpack.optimize.UglifyJsPlugin({
-        compress: {
-          warnings: VERBOSE,
-        },
-      }),
-    ] : []),
-  ],
-
-  module: {
-    loaders: [
-      JS_LOADER,
-      ...commonConfig.module.loaders,
-    ],
-  },
-});
-
-export default [appConfig, serverConfig];
+export default playgroundConfig;

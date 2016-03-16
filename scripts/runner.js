@@ -28,7 +28,7 @@ export default function run(fn, options) {
 if (process.argv.length > 2) {
   delete require.cache[__filename];
   const taskName = process.argv[2];
-  run(Tasks[taskName]).catch(err => {
+  run(Tasks[taskName], process.argv[3]).catch(err => {
     console.error(err.stack); // eslint-disable-line
   });
 }
