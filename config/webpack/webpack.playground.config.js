@@ -1,5 +1,6 @@
 import { join, resolve } from 'path';
 import webpack from 'webpack';
+import { ForkCheckerPlugin } from 'awesome-typescript-loader';
 
 const ROOT = process.cwd();
 
@@ -24,6 +25,17 @@ const JS_LOADER = {
   },
 };
 
+const TS_LOADER = {
+  test: /\.tsx?$/,
+  exclude: /node_modules/,
+  include: ROOT,
+  loader: require.resolve('awesome-typescript-loader'),
+  query: {
+    useBabel: true,
+    useCache: true,
+  },
+};
+
 const context = join(resolve(ROOT), './playground');
 
 // Common config. Used both for client and server.
@@ -36,6 +48,7 @@ const commonConfig = {
 
   resolve: {
     root: resolve(ROOT),
+    extensions: ['', '.webpack.js', '.web.js', '.js', '.jsx', '.ts', '.tsx'],
   },
 
   cache: DEBUG,
@@ -86,7 +99,7 @@ const playgroundConfig = Object.assign({}, commonConfig, {
   entry: {
     client: [
       ...(WATCH ? [require.resolve('webpack-hot-middleware/client')] : []),
-      './clientEntry.js',
+      './clientEntry.tsx',
     ],
   },
 
@@ -103,6 +116,7 @@ const playgroundConfig = Object.assign({}, commonConfig, {
   plugins: [
     ...commonConfig.plugins,
     new webpack.DefinePlugin(GLOBALS),
+    new ForkCheckerPlugin(),
     ...(!DEBUG ? [
       new webpack.optimize.DedupePlugin(),
       new webpack.optimize.UglifyJsPlugin({
@@ -119,23 +133,8 @@ const playgroundConfig = Object.assign({}, commonConfig, {
 
   module: {
     loaders: [
-      WATCH ? {
-        ...JS_LOADER,
-        query: {
-          plugins: [
-            ['react-transform', {
-              transforms: [
-                {
-                  transform: require.resolve('react-transform-hmr'),
-                  imports: ['react'],
-                  locals: ['module'],
-                },
-              ],
-            },
-           ],
-          ],
-        },
-      } : JS_LOADER,
+      JS_LOADER,
+      TS_LOADER,
       ...commonConfig.module.loaders,
     ],
   },

@@ -1,6 +1,8 @@
 {
- "scriptPreprocessor": "<rootDir>/node_modules/babel-jest",
- "testPathIgnorePatterns": ["node_modules", "lib"],
+ "scriptPreprocessor": "<rootDir>/node_modules/builder-react-comp/config/jest/preprocessor.js",
+ "testPathDirs": ["src", "playground"],
+ "testFileExtensions": ["ts", "tsx", "js"],
+ "moduleFileExtensions": ["ts", "tsx", "js", "json", "node"],
  "unmockedModulePathPatterns": [
    "react",
    "enzyme"
