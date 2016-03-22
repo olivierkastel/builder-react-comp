@@ -1,6 +1,6 @@
 {
   "name": "builder-react-comp",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Builder Archetype - React Component",
   "main": "lib/index.js",
   "scripts": {
@@ -17,6 +17,7 @@
     "build:commonjs": "rimraf ./lib && BABEL_ENV=commonjs babel ./libTs/src --out-dir ./lib --ignore **/__tests__/**,**/*.d.js",
     "build:es": "rimraf ./es && BABEL_ENV=es babel ./libTs/src --out-dir ./es --ignore **/__tests__/**,**/*.d.js",
     "build": "builder run build:typescript && builder concurrent build:commonjs build:es",
+    "typings": "typings install",
     "release": "node node_modules/builder-react-comp/lib/index release"
   },
   "repository": {
