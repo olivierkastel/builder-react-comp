@@ -1,14 +1,15 @@
 {
   "name": "builder-react-comp",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Builder Archetype - React Component",
   "main": "lib/index.js",
   "scripts": {
     "builder:compile": "rimraf ./lib && babel index.js --out-dir lib/ && babel scripts --out-dir lib/scripts && babel config --out-dir lib/config",
     "builder:gen-dev": "builder-support gen-dev",
     "prepublish": "npm run builder:compile",
-    "tslint": "tslint -c tslint.json src/**/*",
-    "lint": "builder concurrent tslint",
+    "tslint": "tslint -c tslint.json '{playground,src}/**/*.{ts,tsx}'",
+    "eslint": "eslint --color '{playground,src}/**/*.{js,jsx}'",
+    "lint": "builder concurrent eslint tslint",
     "test:all": "BABEL_ENV=commonjs jest --config node_modules/builder-react-comp/config/jest/config.json --colors",
     "test:all:watch": "BABEL_ENV=commonjs jest --config node_modules/builder-react-comp/config/jest/config.json --watch --watchExtensions ts,tsx,js --colors",
     "test:all:coverage": "BABEL_ENV=commonjs jest --config node_modules/builder-react-comp/config/jest/config.coverage.json --colors",
