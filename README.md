@@ -28,7 +28,7 @@ archetypes:
 * `builder run build:commomjs`: Compile the component to ES5. Commonjs module compatible. The output folder is `./lib`
 * `builder run build:es`: Compile the component to ES5. ES2015 module compatible. The output folder is `./es`
 * `builder run build:typescript`: Compile the component to ES2015. ES2015 module compatible. The output folder is `./libTS` and generate typescript definition files
-* `builder run builder`: Execute the 3 previous tasks
+* `builder run build`: Execute the 3 previous tasks in parallel
 
 ### Server playground
 * `builder run serve:playground`: Serve the component playground. Check `http://localhost:3000` :smile:
