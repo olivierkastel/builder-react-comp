@@ -1,58 +1,42 @@
 {
-  "_args": [
-    [
-      {
-        "raw": "builder-react-comp@0.1.6",
-        "scope": null,
-        "escapedName": "builder-react-comp",
-        "name": "builder-react-comp",
-        "rawSpec": "0.1.6",
-        "spec": "0.1.6",
-        "type": "version"
-      },
-      "/Users/kastelolivier/Desktop/test2"
-    ]
+  "name": "builder-react-comp",
+  "version": "0.1.6",
+  "description": "Builder Archetype - React Component",
+  "main": "lib/index.js",
+  "scripts": {
+    "builder:compile": "rimraf ./lib && babel index.js --out-dir lib/ && babel scripts --out-dir lib/scripts && babel config --out-dir lib/config",
+    "builder:gen-dev": "builder-support gen-dev",
+    "prepublish": "npm run builder:compile",
+    "tslint": "tslint -c tslint.json '{playground,src}/**/*.{ts,tsx}'",
+    "eslint": "eslint --color '{playground,src}/**/*.{js,jsx}'",
+    "lint": "builder concurrent eslint tslint",
+    "test:all": "BABEL_ENV=commonjs jest --config node_modules/builder-react-comp/config/jest/config.json --colors",
+    "test:all:watch": "BABEL_ENV=commonjs jest --config node_modules/builder-react-comp/config/jest/config.json --watch --watchExtensions ts,tsx,js --colors",
+    "test:all:coverage": "BABEL_ENV=commonjs jest --config node_modules/builder-react-comp/config/jest/config.coverage.json --colors",
+    "serve:playground": "BABEL_ENV=development node node_modules/builder-react-comp/lib/index serve playground",
+    "build:typescript": "rimraf ./libTs && tsc -p .",
+    "build:commonjs": "rimraf ./lib && BABEL_ENV=commonjs babel ./libTs/src --out-dir ./lib --ignore **/__tests__/**,**/*.d.js",
+    "build:es": "rimraf ./es && BABEL_ENV=es babel ./libTs/src --out-dir ./es --ignore **/__tests__/**,**/*.d.js",
+    "build": "builder run build:typescript && builder concurrent build:commonjs build:es",
+    "typings:install": "typings install",
+    "release": "node node_modules/builder-react-comp/lib/index release"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hourliert/builder-react-comp.git"
+  },
+  "keywords": [
+    "builder",
+    "archetype",
+    "react",
+    "component"
   ],
-  "_from": "builder-react-comp@0.1.6",
-  "_id": "builder-react-comp@0.1.6",
-  "_inCache": true,
-  "_location": "/builder-react-comp",
-  "_nodeVersion": "5.8.0",
-  "_npmOperationalInternal": {
-    "host": "packages-13-west.internal.npmjs.com",
-    "tmp": "tmp/builder-react-comp-0.1.6.tgz_1458690481558_0.5540132920723408"
-  },
-  "_npmUser": {
-    "name": "cnode",
-    "email": "hourliert@gmail.com"
-  },
-  "_npmVersion": "3.7.3",
-  "_phantomChildren": {},
-  "_requested": {
-    "raw": "builder-react-comp@0.1.6",
-    "scope": null,
-    "escapedName": "builder-react-comp",
-    "name": "builder-react-comp",
-    "rawSpec": "0.1.6",
-    "spec": "0.1.6",
-    "type": "version"
-  },
-  "_requiredBy": [
-    "/"
-  ],
-  "_resolved": "https://registry.npmjs.org/builder-react-comp/-/builder-react-comp-0.1.6.tgz",
-  "_shasum": "bd1cc1c70bb927fd927905f5c469dca9dbb04fdc",
-  "_shrinkwrap": null,
-  "_spec": "builder-react-comp@0.1.6",
-  "_where": "/Users/kastelolivier/Desktop/test2",
-  "author": {
-    "name": "Thomas Hourlier",
-    "email": "hourliert@gmail.com",
-    "url": "https://github.com/hourliert"
-  },
+  "author": "Thomas Hourlier <hourliert@gmail.com> (https://github.com/hourliert)",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/hourliert/builder-react-comp/issues"
   },
+  "homepage": "https://github.com/hourliert/builder-react-comp#readme",
   "dependencies": {
     "babel-cli": "^6.5.0",
     "babel-core": "^6.5.0",
@@ -91,62 +75,14 @@
     "typescript": "^1.8.9",
     "typings": "^0.7.9"
   },
-  "description": "Builder Archetype - React Component",
   "devDependencies": {
     "babel-eslint": "^5.0.0",
     "babel-preset-es2015": "^6.5.0",
     "builder-support": "^0.3.0",
-    "eslint": "^2.2.0",
+    "eslint": "2.2.0",
     "eslint-config-airbnb": "^6.1.0",
     "eslint-config-react": "^1.1.1",
     "eslint-plugin-react": "^4.1.0",
     "jscs": "^2.11.0"
-  },
-  "directories": {},
-  "dist": {
-    "shasum": "bd1cc1c70bb927fd927905f5c469dca9dbb04fdc",
-    "tarball": "https://registry.npmjs.org/builder-react-comp/-/builder-react-comp-0.1.6.tgz"
-  },
-  "gitHead": "9bce0b2c6aee41f7f56c9b23780bb19a6c6365ad",
-  "homepage": "https://github.com/hourliert/builder-react-comp#readme",
-  "keywords": [
-    "builder",
-    "archetype",
-    "react",
-    "component"
-  ],
-  "license": "MIT",
-  "main": "lib/index.js",
-  "maintainers": [
-    {
-      "name": "cnode",
-      "email": "hourliert@gmail.com"
-    }
-  ],
-  "name": "builder-react-comp",
-  "optionalDependencies": {},
-  "readme": "ERROR: No README data found!",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/hourliert/builder-react-comp.git"
-  },
-  "scripts": {
-    "build": "builder run build:typescript && builder concurrent build:commonjs build:es",
-    "build:commonjs": "rimraf ./lib && BABEL_ENV=commonjs babel ./libTs/src --out-dir ./lib --ignore **/__tests__/**,**/*.d.js",
-    "build:es": "rimraf ./es && BABEL_ENV=es babel ./libTs/src --out-dir ./es --ignore **/__tests__/**,**/*.d.js",
-    "build:typescript": "rimraf ./libTs && tsc -p .",
-    "builder:compile": "rimraf ./lib && babel index.js --out-dir lib/ && babel scripts --out-dir lib/scripts && babel config --out-dir lib/config",
-    "builder:gen-dev": "builder-support gen-dev",
-    "eslint": "eslint --color '{playground,src}/**/*.{js,jsx}'",
-    "lint": "builder concurrent eslint tslint",
-    "prepublish": "npm run builder:compile",
-    "release": "node node_modules/builder-react-comp/lib/index release",
-    "serve:playground": "BABEL_ENV=development node node_modules/builder-react-comp/lib/index serve playground",
-    "test:all": "BABEL_ENV=commonjs jest --config node_modules/builder-react-comp/config/jest/config.json --colors",
-    "test:all:coverage": "BABEL_ENV=commonjs jest --config node_modules/builder-react-comp/config/jest/config.coverage.json --colors",
-    "test:all:watch": "BABEL_ENV=commonjs jest --config node_modules/builder-react-comp/config/jest/config.json --watch --watchExtensions ts,tsx,js --colors",
-    "tslint": "tslint -c tslint.json '{playground,src}/**/*.{ts,tsx}'",
-    "typings:install": "typings install"
-  },
-  "version": "0.1.6"
+  }
 }
